@@ -1,15 +1,15 @@
 package com.sam.activemq.consumer;
 
-import java.util.concurrent.CountDownLatch;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.CountDownLatch;
+
 /**
  * @author sumit
- *
  */
 @Component
 public class Receiver {
@@ -22,7 +22,8 @@ public class Receiver {
 		return latch;
 	}
 
-	@JmsListener(destination = "${queue.name}")
+	@Qualifier("queueListener")
+	@JmsListener(destination = "MyQueue", containerFactory = "queueListener")
 	public void receive(String message) {
 		LOGGER.info("received message='{}'", message);
 		latch.countDown();

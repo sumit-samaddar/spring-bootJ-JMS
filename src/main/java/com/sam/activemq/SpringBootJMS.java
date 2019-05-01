@@ -33,29 +33,30 @@ public class SpringBootJMS implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		
+
 		LOGGER.info("<<<<<<<<<<<<<<<<<<<P2P>>>>>>>>>>>>>>>>>>>>>");
 		LOGGER.info(
 				"Application started with command-line arguments: {} . \n To kill this application, press Ctrl + C.",
 				Arrays.toString(args));
 
 		sender.send("MyQueue", "Hello Boot!");
+
 		LOGGER.info("<<<<<<<<<<<<<<<<<<<P2P>>>>>>>>>>>>>>>>>>>>>");
-		
+
 		LOGGER.info("<<<<<<<<<<<<<<<<<<<TOPIC>>>>>>>>>>>>>>>>>>>>>");
 
 		LOGGER.info("Spring Boot ActiveMQ Publish Subscribe Topic Configuration Example");
 
 		for (int i = 0; i < 5; i++) {
-			Order order = new Order("me", "you", new BigDecimal(i), LocalDateTime.now());
+			Order order = new Order(Integer.valueOf(i), "me", "you", new BigDecimal(i), LocalDateTime.now());
 			orderSender.sendTopic(order);
 		}
+
+		LOGGER.info("<<<<<<<<<<<<<<<<<<<TOPIC>>>>>>>>>>>>>>>>>>>>>");
 
 		LOGGER.info("Waiting for all ActiveMQ JMS Messages to be consumed");
 		TimeUnit.SECONDS.sleep(3);
 		System.exit(-1);
-		
-		LOGGER.info("<<<<<<<<<<<<<<<<<<<TOPIC>>>>>>>>>>>>>>>>>>>>>");
 
 	}
 }
