@@ -43,6 +43,23 @@ public class ActiveMQConfig {
 		return connectionFactory;
 	}
 
+		@Bean("fileQueueTemplate")
+	public JmsTemplate jmsFileQueueTemplate(ConnectionFactory connectionFactory) {
+		JmsTemplate template = new JmsTemplate();
+		template.setConnectionFactory(connectionFactory);
+		template.setPubSubDomain(false);
+		return template;
+	}
+
+	@Bean("fileQueueListener")
+	public DefaultJmsListenerContainerFactory jmsFileQueueListenerContainerFactory(ConnectionFactory connectionFactory) {
+		DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+		factory.setConnectionFactory(connectionFactory);
+		factory.setConcurrency("1-1");
+		factory.setPubSubDomain(false);
+		return factory;
+	}
+
 	@Bean("queueTemplate")
 	public JmsTemplate jmsQueueTemplate(ConnectionFactory connectionFactory) {
 		JmsTemplate template = new JmsTemplate();

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
+import com.sam.activemq.producer.FileSender;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.sam.activemq.entity.Order;
 import com.sam.activemq.producer.OrderSender;
 import com.sam.activemq.producer.Sender;
+import java.io.File;
 
 @SpringBootApplication
 public class SpringBootJMS implements CommandLineRunner {
@@ -27,6 +29,9 @@ public class SpringBootJMS implements CommandLineRunner {
 	@Autowired
 	private OrderSender orderSender;
 
+	@Autowired
+	private FileSender fileSender;
+
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootJMS.class, args);
 	}
@@ -34,7 +39,7 @@ public class SpringBootJMS implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		LOGGER.info("<<<<<<<<<<<<<<<<<<<P2P>>>>>>>>>>>>>>>>>>>>>");
+		/*LOGGER.info("<<<<<<<<<<<<<<<<<<<P2P>>>>>>>>>>>>>>>>>>>>>");
 		LOGGER.info(
 				"Application started with command-line arguments: {} . \n To kill this application, press Ctrl + C.",
 				Arrays.toString(args));
@@ -55,7 +60,10 @@ public class SpringBootJMS implements CommandLineRunner {
 		LOGGER.info("<<<<<<<<<<<<<<<<<<<TOPIC>>>>>>>>>>>>>>>>>>>>>");
 
 		LOGGER.info("Waiting for all ActiveMQ JMS Messages to be consumed");
-		TimeUnit.SECONDS.sleep(3);
+		TimeUnit.SECONDS.sleep(3);*/
+
+		fileSender.sendFile(new File("E:\\java-projects\\apache-ftpserver-1.1.1\\apache-ftpserver-1.1.1\\res\\home\\sumit\\README.txt"));
+
 		System.exit(-1);
 
 	}
